@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-git clone https://github.com/youruser/nvim-config.git ~/nvim
+git clone https://github.com/m0cak/nvim-config.git ~/nvim
 rm -rf ~/.config/nvim
 ln -s ~/nvim ~/.config/nvim
 
