@@ -72,4 +72,13 @@ vim.keymap.set("v", "<leader>/", function()
   require("Comment.api").toggle.linewise(vim.fn.visualmode())
 end, { desc = "Toggle comment on selection" })
 
+-- Add these for auto-indentation
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.cindent = true  -- C-style indenting (good for most languages)
+vim.opt.softtabstop = 4  -- Makes backspace behave better with spaces
+
+-- Optional: better search behavior
+vim.opt.smartcase = true  -- Case sensitive if search contains uppercase
+
 

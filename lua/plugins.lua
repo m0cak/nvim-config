@@ -387,6 +387,13 @@ require("lazy").setup({
             vim.g.rooter_silent_chdir = 0
         end
     },
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup {}
+        end
+    },
   },
   -- install = { colorscheme = { "kanagawa" } },
   checker = { enabled = true },
