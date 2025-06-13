@@ -61,3 +61,15 @@ vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Line Diag
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
 
+
+-- toggle comment for the current line
+vim.keymap.set("n", "<leader>/", function()
+  require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle comment on current line" })
+
+-- toggle comment for the selected block
+vim.keymap.set("v", "<leader>/", function()
+  require("Comment.api").toggle.linewise(vim.fn.visualmode())
+end, { desc = "Toggle comment on selection" })
+
+

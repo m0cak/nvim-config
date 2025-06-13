@@ -365,6 +365,28 @@ require("lazy").setup({
             vim.g.lazygit_use_neovim_remote = 1
         end,
     },
+    {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup({
+                -- your options here (all sensible defaults, so you could leave this table empty)
+            })
+
+        end
+    },
+    {
+        "airblade/vim-rooter",
+        config = function()
+            -- Optional: Only change directory for specific filetypes (default: all files)
+            vim.g.rooter_patterns = { '.git', 'package.json', 'Makefile', '*.sln', 'Cargo.toml' }
+            
+            -- Optional: Change how root is detected (default: "automatic")
+            vim.g.rooter_cd_cmd = "cd" -- or "lcd" for window-local directory
+            
+            -- Optional: Silent mode (no messages when changing directory)
+            vim.g.rooter_silent_chdir = 0
+        end
+    },
   },
   -- install = { colorscheme = { "kanagawa" } },
   checker = { enabled = true },
