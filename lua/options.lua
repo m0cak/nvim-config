@@ -35,4 +35,13 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
+vim.opt.diffopt:append {
+  "vertical",
+  "foldcolumn:0",
+  "indent-heuristic",
+  "algorithm:patience",
+  "iwhite",
+}
+
+
 

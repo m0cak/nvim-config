@@ -175,7 +175,11 @@ require("lazy").setup({
     },
     {
         "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },  -- Required dependency
+        dependencies = {
+            { 
+                    "nvim-lua/plenary.nvim"
+            },
+        },
         config = function()
             require("telescope").setup({})
             -- Optional: you can set up custom pickers, extensions, or mappings here
@@ -394,7 +398,22 @@ require("lazy").setup({
             require("nvim-autopairs").setup {}
         end
     },
-  },
+    {
+        "mtdl9/vim-log-highlighting",
+        ft = "log", -- lazy-loads only for .log files
+    },
+    {
+      "folke/zen-mode.nvim",
+      opts = {
+                window = {
+                    width = 0.9,
+                }
+            }, -- defaults are fine
+      keys = {
+        { "<leader>z", function() require("zen-mode").toggle() end, desc = "Toggle Zen Mode" },
+      },
+    },
+},
   -- install = { colorscheme = { "kanagawa" } },
   checker = { enabled = true },
 })
