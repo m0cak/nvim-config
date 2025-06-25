@@ -413,6 +413,54 @@ require("lazy").setup({
         { "<leader>z", function() require("zen-mode").toggle() end, desc = "Toggle Zen Mode" },
       },
     },
+    {
+      'lewis6991/gitsigns.nvim',
+      event = { "BufReadPre", "BufNewFile" },
+      config = function()
+        require('gitsigns').setup({
+          preview_config = {
+            border = 'single',
+            style = 'minimal',
+            relative = 'cursor',
+            row = 0,
+            col = 1,
+            height = 20, -- Show more of the hunk vertically
+            width = 80,  -- Wider for long diffs
+          },
+          on_attach = function(bufnr)
+            local gs = package.loaded.gitsigns
+
+            local function map(mode, lhs, rhs, desc)
+              vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+            end
+
+            -- Navigation
+            map('n', ']c', gs.next_hunk, "Next Git Hunk")
+            map('n', '[c', gs.prev_hunk, "Prev Git Hunk")
+
+            -- Actions
+            map('n', '<leader>hp', function()
+              gs.preview_hunk()
+              -- Uncomment the next line to automatically enter the floating window
+              -- vim.cmd("wincmd p")
+            end, "Preview Hunk")
+
+            map('n', '<leader>hs', gs.stage_hunk, "Stage Hunk")
+            map('n', '<leader>hS', gs.stage_buffer, "Stage Buffer")
+            map('n', '<leader>hu', gs.undo_stage_hunk, "Undo Stage Hunk")
+            map('n', '<leader>hb', function() gs.blame_line({ full = true }) end, "Blame Line")
+
+            -- Optional reset mappings (disabled by default)
+            -- map('n', '<leader>hr', gs.reset_hunk, "Reset Hunk")
+            -- map('n', '<leader>hR', gs.reset_buffer, "Reset Buffer")
+          end,
+        })
+      end,
+    },
+    {
+        'tpope/vim-fugitive',
+        cmd = { 'Gdiffsplit', 'Gvdiffsplit' }, -- only loads when these commands are used
+    },
 },
   -- install = { colorscheme = { "kanagawa" } },
   checker = { enabled = true },
