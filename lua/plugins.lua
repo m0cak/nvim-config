@@ -117,9 +117,10 @@ require("lazy").setup({
                 settings = {
                     python = {
                         analysis = {
-                            extraPaths = { project_root .. "/market-client/src" },
+                            -- extraPaths = { project_root .. "/market-client/src" },
                             autoSearchPaths = true,
                             useLibraryCodeForTypes = true,
+                            autoImportCompletions = true,
                         },
                     },
                 },
@@ -256,10 +257,22 @@ require("lazy").setup({
         'stevearc/oil.nvim',
         ---@module 'oil'
         ---@type oil.SetupOpts
-        opts = {},
+        opts = {
+            keymaps = {
+                -- Custom keybinding to yank full file path with `yp`
+                ["yp"] = function()
+                    local oil = require("oil")
+                    local entry = oil.get_cursor_entry()
+                    if entry then
+                        local path = oil.get_current_dir() .. entry.name
+                        vim.fn.setreg("+", path)  -- system clipboard
+                        vim.notify("Yanked: " .. path, vim.log.levels.INFO)
+                    end
+                end,
+            },
+        },
         -- Optional dependencies
         dependencies = { { "echasnovski/mini.icons", opts = {} } },
-        -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
         -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
         lazy = false,
     },
@@ -460,6 +473,21 @@ require("lazy").setup({
     {
         'tpope/vim-fugitive',
         cmd = { 'Gdiffsplit', 'Gvdiffsplit' }, -- only loads when these commands are used
+    },
+    {
+      "kndndrj/nvim-dbee",
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+      },
+      build = function()
+        -- Install tries to automatically detect the install method.
+        -- if it fails, try calling it with one of these parameters:
+        --    "curl", "wget", "bitsadmin", "go"
+        require("dbee").install()
+      end,
+      config = function()
+        require("dbee").setup(--[[optional config]])
+      end,
     },
 },
   -- install = { colorscheme = { "kanagawa" } },
