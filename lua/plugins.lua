@@ -375,7 +375,7 @@ require("lazy").setup({
       },
       config = function()
         require("mason-null-ls").setup({
-          ensure_installed = { "black", "flake8" , "debugpy},
+          ensure_installed = { "black", "flake8" , "debugpy"},
           automatic_installation = true,
         })
       end,
