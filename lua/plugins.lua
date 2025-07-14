@@ -108,16 +108,26 @@ require("lazy").setup({
         dependencies = {
             "mason-org/mason.nvim",
             "neovim/nvim-lspconfig",
-        }, -- to allow nvim to load dependeicies at particular order e.g. mason should be loaded before mason-lspconfig
+        },
         config = function()
-            local lspconfig = require("lspconfig")
-            local project_root = vim.fn.getcwd()
+            -- Mason will download the servers in this list
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    -- "clangd",            -- C/C++
+                    "pyright", -- Python
+                    "bashls", -- Bash
+                    "jsonls", -- JSON
+                    "lua_ls", -- Lua  (new name for sumneko_lua)
+                },
+                automatic_installation = true,
+            })
 
+            -- LSP-specific settings (example: Pyright)
+            local lspconfig = require("lspconfig")
             lspconfig.pyright.setup({
                 settings = {
                     python = {
                         analysis = {
-                            -- extraPaths = { project_root .. "/market-client/src" },
                             autoSearchPaths = true,
                             useLibraryCodeForTypes = true,
                             autoImportCompletions = true,
@@ -125,6 +135,7 @@ require("lazy").setup({
                     },
                 },
             })
+            -- add extra lspconfig setups here if you need them
         end,
     },
     {
@@ -364,7 +375,7 @@ require("lazy").setup({
       },
       config = function()
         require("mason-null-ls").setup({
-          ensure_installed = { "black", "flake8" },
+          ensure_installed = { "black", "flake8" , "debugpy},
           automatic_installation = true,
         })
       end,
